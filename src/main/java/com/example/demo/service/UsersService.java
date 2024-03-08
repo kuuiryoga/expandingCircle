@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Users;
@@ -26,5 +27,9 @@ public class UsersService {
 	public void insert(Users users) {
 		repository.save(users);
 	}
+
+	public List<Users>  loginCheack(Users users) {
+		return repository.findLoginUser(users.getUserid(), users.getPassword());
+	} 
 }
 

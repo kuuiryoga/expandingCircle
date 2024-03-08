@@ -9,15 +9,17 @@
         ログイン画面
     </h1>
 
-    <!-- idとpasswordのみを参照してログインする画面 -->
-    <form action="/main1" method="post">
-        <p>userID</p>
-        <input type="text" name="id">
-        <p>password</p>
-        <input type="text" name="password">
-
-        <input type="submit" value="login">
-    </form>
+	<div id="login-form">
+	    <!-- idとpasswordのみを参照してログインする画面 -->
+		<form th:action="@{/login}" th:object="${loginForm}" method="post">
+	        <p>userID</p>
+			<input type="text" th:field="*{userid}" />
+	        <p>password</p>
+	        <input type="text" th:field="*{password}" />
+	
+	        <input type="submit" value="login">
+	    </form>
+	</div>
 
 </body>
 </html>

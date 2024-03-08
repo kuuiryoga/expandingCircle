@@ -7,12 +7,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "forums")
+@Table(name = "users")
+@NamedQuery(name = "findLoginUser", query = "select u from Users u where u.userid = :userid and u.password = :password and deleteFlg = false order by u.id asc")
 public class Users {
 
 	@Id
@@ -30,13 +32,13 @@ public class Users {
 	private String name;
 
 	@Column(name = "sex")
-	private int sex;
+	private String sex;
 
 	@Column(name = "mail")
 	private String mail;
 
 	@Column(name = "age")
-	private int  age;
+	private String  age;
 
 	@Column(name = "text")
 	private String text;
@@ -85,11 +87,11 @@ public class Users {
 		this.name = name;
 	}
 
-	public int getSex() {
+	public String getSex() {
 		return sex;
 	}
 
-	public void setSex(int sex) {
+	public void setSex(String sex) {
 		this.sex = sex;
 	}
 
@@ -101,11 +103,11 @@ public class Users {
 		this.mail = mail;
 	}
 
-	public int getAge() {
+	public String getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(String age) {
 		this.age = age;
 	}
 
