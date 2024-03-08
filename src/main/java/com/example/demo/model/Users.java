@@ -1,6 +1,10 @@
 package com.example.demo.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,10 +17,13 @@ import lombok.Data;
 
 @Data
 @Entity
+@Component
+@SessionScope
 @Table(name = "users")
 @NamedQuery(name = "findLoginUser", query = "select u from Users u where u.userid = :userid and u.password = :password and deleteFlg = false order by u.id asc")
-public class Users {
-
+public class Users implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

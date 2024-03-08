@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.model.Forum;
+import com.example.demo.model.LoginData;
 import com.example.demo.model.Users;
 import com.example.demo.service.UsersService;
 
@@ -20,7 +21,10 @@ import com.example.demo.service.UsersService;
 @RequestMapping("")
 @Controller
 public class LoginController {
-	//PathVariableで userId と password をクエリパラメータから持ってきているので、後ほどフォームクラスを生成して＠RequestParamに変更する。
+	
+		@Autowired
+		Users user;
+		
 		@Autowired
 		UsersService service;
 
@@ -33,11 +37,17 @@ public class LoginController {
 
 		@PostMapping("/login")
 		public ModelAndView login(@ModelAttribute Users users, ModelAndView mv) {
+			System.out.println(users.getUserid());
+			System.out.println(users.getPassword());
 			List<Users> userList = service.loginCheack(users);
+			System.out.println(userList.get(0));
 			// ログインできるユーザーが存在するか
 			if ( userList != null && userList.size() > 0 ) {
 				// ログイン成功時
-				mv.setViewName("main1");
+				user.setUserid(userList.get(0).getUserid());
+				user.setPassword(userList.get(0).getPassword());
+//				mv.addObject(loginData);
+				mv.setViewName("form_SelfIntroduction");
 			} else {
 				// ログイン失敗時
 				mv.addObject("loginForm", users);
