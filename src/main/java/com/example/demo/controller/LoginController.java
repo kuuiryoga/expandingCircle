@@ -37,10 +37,8 @@ public class LoginController {
 
 		@PostMapping("/login")
 		public ModelAndView login(@ModelAttribute Users users, ModelAndView mv) {
-			System.out.println(users.getUserid());
-			System.out.println(users.getPassword());
+
 			List<Users> userList = service.loginCheack(users);
-			System.out.println(userList.get(0));
 			// ログインできるユーザーが存在するか
 			if ( userList != null && userList.size() > 0 ) {
 				// ログイン成功時

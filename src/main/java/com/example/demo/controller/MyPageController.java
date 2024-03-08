@@ -26,7 +26,6 @@ public class MyPageController {
 	@GetMapping()
 	public ModelAndView toMyPage(ModelAndView mv) {
 		
-		System.out.println("myPage - sessionTest; "+ this.service.loginCheack(user).get(0));
 		
 //		ログイン情報の有無で分岐処理
 		if(this.service.loginCheack(user).get(0) != null && this.service.loginCheack(user).size() > 0) {

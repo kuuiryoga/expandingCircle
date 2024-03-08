@@ -15,6 +15,7 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+//sessionScopeの移動に際して、データの整合性を取るためにシリアライズする
 @Data
 @Entity
 @Component
