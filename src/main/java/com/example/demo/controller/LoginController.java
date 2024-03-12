@@ -3,23 +3,25 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo.model.Forum;
-import com.example.demo.model.LoginData;
 import com.example.demo.model.Users;
+import com.example.demo.service.FormPattern;
+import com.example.demo.service.Messege;
 import com.example.demo.service.UsersService;
+
+import lombok.RequiredArgsConstructor;
 
 //login用のコントローラ
 @RequestMapping("")
 @Controller
+@RequiredArgsConstructor
 public class LoginController {
 	
 		@Autowired
@@ -28,6 +30,9 @@ public class LoginController {
 		@Autowired
 		UsersService service;
 
+		@Autowired
+		MessageSource messageSource;
+		
 		@GetMapping("/")
 		public ModelAndView init(ModelAndView mv) {
 			mv.addObject("loginForm", new Users());
@@ -38,17 +43,40 @@ public class LoginController {
 		@PostMapping("/login")
 		public ModelAndView login(@ModelAttribute Users users, ModelAndView mv) {
 
-			List<Users> userList = service.loginCheack(users);
-			// ログインできるユーザーが存在するか
-			if ( userList != null && userList.size() > 0 ) {
-				// ログイン成功時
-				user.setUserid(userList.get(0).getUserid());
-				user.setPassword(userList.get(0).getPassword());
-//				mv.addObject(loginData);
-				mv.setViewName("form_SelfIntroduction");
-			} else {
-				// ログイン失敗時
+			//patternで英数字２０文字以内か確認する
+			FormPattern checkUserId = new FormPattern(users.getUserid());
+			checkUserId.notBlank()
+			.characterLimit(3, 20)
+			.notFullWidthCharacter();
+			
+			FormPattern checkPassWord = new FormPattern(users.getPassword());						
+			checkPassWord.notBlank()
+			.characterLimit(3, 20)
+			.notFullWidthCharacter();
+			
+			if(checkUserId.isFormCheck() && checkPassWord.isFormCheck()) {
+				
+				List<Users> userList = service.loginCheack(users);
+				// ログインできるユーザーが存在するか
+				if ( userList != null && userList.size() > 0 ) {
+					// ログイン成功時
+					user.setUserid(userList.get(0).getUserid());
+					user.setPassword(userList.get(0).getPassword());
+					mv.setViewName("form_SelfIntroduction");
+				} else {
+					// ログイン失敗時
+					mv.addObject("loginForm", users);
+					mv.addObject("errorMge", Messege.getErrorMessege(messageSource, "login.wrongInput"));
+					System.out.println("test ; " + Messege.getErrorMessege(messageSource, "login.wrongInput"));
+					mv.setViewName("login");
+				}
+			}else {
+				//Patternでfalse場合
 				mv.addObject("loginForm", users);
+				mv.addObject("errorMge", Messege.getErrorMessege(messageSource, checkUserId));
+				mv.addObject("errorMge", Messege.getErrorMessege(messageSource, checkPassWord));
+				System.out.println("test(id) ; " + Messege.getErrorMessege(messageSource, checkUserId) + "\n"
+									+ "test(pw) ; " +Messege.getErrorMessege(messageSource, checkUserId));
 				mv.setViewName("login");
 			}
 			
@@ -57,10 +85,10 @@ public class LoginController {
 		
 		//とりあえずメソッドだけ用意
 		@GetMapping("/logout")
-		public ModelAndView logout(ModelAndView mv) {
+		public String logout() {
 			
-			mv.setViewName("login");
+			user = new Users();
 			
-			return mv;
+			return "redirect:/";
 		}
 }
