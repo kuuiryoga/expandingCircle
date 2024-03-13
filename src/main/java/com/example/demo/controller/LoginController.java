@@ -67,7 +67,6 @@ public class LoginController {
 					// ログイン失敗時
 					mv.addObject("loginForm", users);
 					mv.addObject("errorMge", Messege.getErrorMessege(messageSource, "login.wrongInput"));
-					System.out.println("test ; " + Messege.getErrorMessege(messageSource, "login.wrongInput"));
 					mv.setViewName("login");
 				}
 			}else {
