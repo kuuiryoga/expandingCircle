@@ -46,15 +46,15 @@ public class LoginController {
 			//patternで英数字２０文字以内か確認する
 			FormPattern checkUserId = new FormPattern(users.getUserid());
 			checkUserId.notBlank()
-			.characterLimit(3, 20)
+			.formLimit(3, 20)
 			.notFullWidthCharacter();
 			
 			FormPattern checkPassWord = new FormPattern(users.getPassword());						
 			checkPassWord.notBlank()
-			.characterLimit(3, 20)
+			.formLimit(3, 20)
 			.notFullWidthCharacter();
 			
-			if(checkUserId.isFormCheck() && checkPassWord.isFormCheck()) {
+			if(checkUserId.isFormsCheck() && checkPassWord.isFormsCheck()) {
 				
 				List<Users> userList = service.loginCheack(users);
 				// ログインできるユーザーが存在するか
@@ -75,8 +75,6 @@ public class LoginController {
 				mv.addObject("loginForm", users);
 				mv.addObject("errorMge", Messege.getErrorMessege(messageSource, checkUserId));
 				mv.addObject("errorMge", Messege.getErrorMessege(messageSource, checkPassWord));
-				System.out.println("test(id) ; " + Messege.getErrorMessege(messageSource, checkUserId) + "\n"
-									+ "test(pw) ; " +Messege.getErrorMessege(messageSource, checkUserId));
 				mv.setViewName("login");
 			}
 			
