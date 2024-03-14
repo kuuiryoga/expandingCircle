@@ -40,13 +40,13 @@ public class Users implements Serializable{
 	private String name;
 
 	@Column(name = "sex")
-	private String sex;
+	private Integer sex;
 
 	@Column(name = "mail")
 	private String mail;
 
 	@Column(name = "age")
-	private String  age;
+	private Integer age;
 
 	@Column(name = "text")
 	private String text;
@@ -96,11 +96,11 @@ public class Users implements Serializable{
 	}
 
 	public String getSex() {
-		return sex;
+		return String.valueOf(this.sex);
 	}
 
 	public void setSex(String sex) {
-		this.sex = sex;
+		this.sex = Integer.valueOf(sex);
 	}
 
 	public String getMail() {
@@ -112,11 +112,11 @@ public class Users implements Serializable{
 	}
 
 	public String getAge() {
-		return age;
+		return String.valueOf(this.age);
 	}
 
 	public void setAge(String age) {
-		this.age = age;
+		this.age = Integer.valueOf(age);
 	}
 
 	public String getText() {
@@ -159,5 +159,17 @@ public class Users implements Serializable{
 		this.updated = updated;
 	}
 
-
+	//usersはinit（）で先に生成されるのでコンストラクタでは無く、別枠で更新する
+	public void userSet(Users user) {
+		this.id = user.getId();
+		this.userid = user.getUserid();
+		this.password = user.getPassword();
+		this.name = user.getName();
+		this.age = Integer.valueOf(user.getAge());
+		this.sex = Integer.valueOf(user.getSex());
+		this.mail = user.getMail();
+		this.text = user.getText();
+		this.uniqueWord = user.getUniqueWord();
+		this.updated = user.getUpdated();
+	}
 }

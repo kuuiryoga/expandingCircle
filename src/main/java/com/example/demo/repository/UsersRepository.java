@@ -15,4 +15,17 @@ public interface UsersRepository extends JpaRepository<Users, Integer> {
     @Query(name = "findLoginUser")
     public List<Users> findLoginUser(@Param("userid") String userId, @Param("password") String password );
 
+//    // ユーザーデータを更新
+//    @Query(name = "updateUser")
+//    public Users updataUser(@Param("userid")String userId,
+//    						@Param("password")String passWord,
+//    						@Param("name")String name,
+//    						@Param("sex")String sex,
+//    						@Param("mail")String mail,
+//    						@Param("age")String age,
+//    						@Param("text")String text,
+//    						@Param("uniqueWord")String uniqueWord,
+//    						@Param("updated")LocalDateTime updataTime);
+    
+    
 }

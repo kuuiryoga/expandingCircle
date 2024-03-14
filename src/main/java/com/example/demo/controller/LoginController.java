@@ -43,48 +43,53 @@ public class LoginController {
 		@PostMapping("/login")
 		public ModelAndView login(@ModelAttribute Users users, ModelAndView mv) {
 
+			
+			
 			//patternで英数字２０文字以内か確認する
 			FormPattern checkUserId = new FormPattern(users.getUserid());
 			checkUserId.notBlank()
 			.formLimit(3, 20)
 			.notFullWidthCharacter();
 			
+			//patternで英数字２０文字以内か確認する
 			FormPattern checkPassWord = new FormPattern(users.getPassword());						
 			checkPassWord.notBlank()
 			.formLimit(3, 20)
 			.notFullWidthCharacter();
 			
+			//Patternチェック
 			if(checkUserId.isFormsCheck() && checkPassWord.isFormsCheck()) {
 				
 				List<Users> userList = service.loginCheack(users);
 				// ログインできるユーザーが存在するか
 				if ( userList != null && userList.size() > 0 ) {
 					// ログイン成功時
-					user.setUserid(userList.get(0).getUserid());
-					user.setPassword(userList.get(0).getPassword());
+					//未完成
+					user.userSet(users);
 					mv.setViewName("form_SelfIntroduction");
 				} else {
 					// ログイン失敗時
 					mv.addObject("loginForm", users);
-					mv.addObject("errorMge", Messege.getErrorMessege(messageSource, "login.wrongInput"));
+					mv.addObject("errorMge", Messege.getMessege(messageSource, "login.wrongInput"));
 					mv.setViewName("login");
 				}
 			}else {
 				//Patternでfalse場合
 				mv.addObject("loginForm", users);
-				mv.addObject("errorMge", Messege.getErrorMessege(messageSource, checkUserId));
-				mv.addObject("errorMge", Messege.getErrorMessege(messageSource, checkPassWord));
+				//入力フォームごとにエラーメッセージを別々に送る
+				mv.addObject("errorMgeId", Messege.getMessege(messageSource, checkUserId));
+				mv.addObject("errorMgePw", Messege.getMessege(messageSource, checkPassWord));
 				mv.setViewName("login");
 			}
 			
 			return mv;
 		}
 		
-		//とりあえずメソッドだけ用意
+		//logout
 		@GetMapping("/logout")
 		public String logout() {
 			
-			user = new Users();
+			user.userSet(null);
 			
 			return "redirect:/";
 		}

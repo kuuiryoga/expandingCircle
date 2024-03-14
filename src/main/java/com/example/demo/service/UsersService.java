@@ -31,5 +31,14 @@ public class UsersService {
 	public List<Users>  loginCheack(Users users) {
 		return repository.findLoginUser(users.getUserid(), users.getPassword());
 	} 
+	
+//	public Users getUserData(Users user) {
+//		return repository.findById(user.getId());
+//	}
+	
+	//データベースのユーザーデータを更新
+	public void update(Users users) {
+		repository.save(users);
+	}
 }
 

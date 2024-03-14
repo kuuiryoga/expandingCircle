@@ -8,7 +8,7 @@
 
     <div class="header">
         <div class="companyLog">
-            <h1><a href="/main1">株式会社ASO</a></h1> <!--いらないかも・・・？　白石-->
+            <h1><a th:href="@{/main/1}">株式会社ASO</a></h1> <!--いらないかも・・・？　白石-->
         </div>
         <div class="headerButton">
             <button type="button" formmethod="get">
@@ -24,52 +24,54 @@
         
 
         <form action="/myPage/edit" method="post">
-
-
-            ユーザーID
-            <input type="text" name="userId">
-            
-            パスワード
-            <input type="password" name="password">
-
-            名前
-            <input type="text" name="name">
-
-            年齢
-            <input type="text" name="age">
-
-            性別
-            <select name="sex">
-                <option value="1">男</option>
-                <option value="2">女</option>
-            </select>
-
-            メールアドレス
-            <input type="text" name="mail">
-
-            自己紹介
-            <textarea name="introduction"></textarea>
-
-            <input type="file" name="selfPortrait" accept="image/jpeg, image/png">
-            <!-- アップロードする画像をプレビューできるといいかもしれない -->
-
-            得意な言語
-            <div>
-                <input type="checkbox" name="uniqueWord" value="java" id="java">
-                <label for="java">Java</label>
-                <input type="checkbox" name="uniqueWord" value="python" id="python">
-                <label for="python">Python</label>
-                <input type="checkbox" name="uniqueWord" value="c#" id="c#">
-                <label for="c#">C#</label>
-                <input type="checkbox" name="uniqueWord" value="javaScript" id="javaScript">
-                <label for="javaScript">JavaScript</label>
-                <input type="checkbox" name="uniqueWord" value="php" id="php">
-                <label for="php">PHP</label>
-            </div>
-            <!--<<提案>>　前に得意な言語とか凝り固まった感じでは無く、これからしたい言語とかも情報として持てればと言っていたので、
-            	得意な言語　→　好きな言語　に変更してはどうですか　白石 -->
-
-            <input type="submit" value="更新">
+		
+			<div class="intoForm" th:object = "${userData}">
+	            ユーザーID
+	            <input type="text" name="userId" th:value="*{userid}">
+	            
+	            パスワード
+	            <input type="password" name="password" th:value="*{password}">
+	
+	            名前
+	            <input type="text" name="name" th:value="*{name}">
+	
+	            年齢
+	            <input type="text" name="age" th:value="*{age}">
+	
+	            性別
+	            <select name="sex" th:value="*{sex}">
+	                <option value="1">男</option>
+	                <option value="2">女</option>
+	            </select>
+	
+	            メールアドレス
+	            <input type="text" name="mail" th:value="*{mail}">
+	
+	            自己紹介
+	            <textarea name="introduction" th:value="*{text}"></textarea>
+	
+	            <input type="file" name="selfPortrait" accept="image/jpeg, image/png">
+	            <!-- アップロードする画像をプレビューできるといいかもしれない -->
+	
+	            得意な言語
+	            <div>
+	                <input type="checkbox" name="uniqueWord" value="java" id="java">
+	                <label for="java">Java</label>
+	                <input type="checkbox" name="uniqueWord" value="python" id="python">
+	                <label for="python">Python</label>
+	                <input type="checkbox" name="uniqueWord" value="c#" id="c#">
+	                <label for="c#">C#</label>
+	                <input type="checkbox" name="uniqueWord" value="javaScript" id="javaScript">
+	                <label for="javaScript">JavaScript</label>
+	                <input type="checkbox" name="uniqueWord" value="php" id="php">
+	                <label for="php">PHP</label>
+	            </div>
+	            <!--<<提案>>　前に得意な言語とか凝り固まった感じでは無く、これからしたい言語とかも情報として持てればと言っていたので、
+	            	得意な言語　→　好きな言語　に変更してはどうですか　白石 -->
+	
+	            <input type="submit" value="更新">
+	        </div>
+	        
         </form>
         
 

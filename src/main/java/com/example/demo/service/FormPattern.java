@@ -18,13 +18,14 @@ public class FormPattern {
 	
 //	入力判定処理に引っかかっているか確認して真偽値でコントローラに渡す
 	public boolean isFormsCheck() {
-		boolean checkForm = false;
+		boolean checkForm = true;
 		
 		for(String key : errorKeys) {
+			System.out.println("Infor");
 			Pattern p = Pattern.compile("form+");
 			Matcher m = p.matcher(key);
-			if(!m.find()) {
-				checkForm = true;
+			if(m.find()) {
+				checkForm = false;
 			}
 		}
 		

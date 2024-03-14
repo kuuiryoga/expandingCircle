@@ -23,14 +23,16 @@ public class MyPageController {
 	UsersService service;
 	
 	@GetMapping()
-	public ModelAndView toMyPage(ModelAndView mv) {
+	public ModelAndView toMyPage(@ModelAttribute Users user, ModelAndView mv) {
 		
 		
 //		ログイン情報の有無で分岐処理
-		if(this.service.loginCheack(user).get(0) != null && this.service.loginCheack(user).size() > 0) {
+		if(this.service.loginCheack(this.user).size() > 0 && 
+			this.service.loginCheack(this.user).get(0) != null) {
 			mv.setViewName("myPage");
+			mv.addObject("userData", this.user);
 		}else{
-			mv.setViewName("login");
+			mv.setViewName("redirect:/");
 		}
 		
 		return mv;
@@ -38,7 +40,7 @@ public class MyPageController {
 	
 	@PostMapping("/edit")
 	public ModelAndView updataMyData(@ModelAttribute Users user, ModelAndView mv) {
-//		service.updata(user);
+		service.update(user);
 		mv.setViewName("form_SelfIntroduction");
 		
 		return mv;
