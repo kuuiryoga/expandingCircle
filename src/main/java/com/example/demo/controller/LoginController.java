@@ -66,7 +66,7 @@ public class LoginController {
 					// ログイン成功時
 					//未完成
 					user.userSet(users);
-					mv.setViewName("form_SelfIntroduction");
+					mv.setViewName("selfIntroduction");
 				} else {
 					// ログイン失敗時
 					mv.addObject("loginForm", users);
