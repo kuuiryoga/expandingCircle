@@ -64,8 +64,7 @@ public class LoginController {
 				// ログインできるユーザーが存在するか
 				if ( userList != null && userList.size() > 0 ) {
 					// ログイン成功時
-					//未完成
-					user.userSet(users);
+					user.userSet(userList.get(0));
 					mv.setViewName("selfIntroduction");
 				} else {
 					// ログイン失敗時
