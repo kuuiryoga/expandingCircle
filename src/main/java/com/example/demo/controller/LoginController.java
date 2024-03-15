@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -24,6 +26,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LoginController {
 	
+		
+	
 		@Autowired
 		Users user;
 		
@@ -32,6 +36,11 @@ public class LoginController {
 
 		@Autowired
 		MessageSource messageSource;
+		
+		
+		
+		
+		
 		
 		@GetMapping("/")
 		public ModelAndView init(ModelAndView mv) {
@@ -43,8 +52,6 @@ public class LoginController {
 		@PostMapping("/login")
 		public ModelAndView login(@ModelAttribute Users users, ModelAndView mv) {
 
-			
-			
 			//patternで英数字２０文字以内か確認する
 			FormPattern checkUserId = new FormPattern(users.getUserid());
 			checkUserId.notBlank()
@@ -57,6 +64,8 @@ public class LoginController {
 			.formLimit(3, 20)
 			.notFullWidthCharacter();
 			
+			
+			
 			//Patternチェック
 			if(checkUserId.isFormsCheck() && checkPassWord.isFormsCheck()) {
 				
@@ -64,6 +73,7 @@ public class LoginController {
 				// ログインできるユーザーが存在するか
 				if ( userList != null && userList.size() > 0 ) {
 					// ログイン成功時
+					
 					user.userSet(userList.get(0));
 					mv.setViewName("selfIntroduction");
 				} else {
@@ -73,11 +83,20 @@ public class LoginController {
 					mv.setViewName("login");
 				}
 			}else {
+				
 				//Patternでfalse場合
 				mv.addObject("loginForm", users);
 				//入力フォームごとにエラーメッセージを別々に送る
-				mv.addObject("errorMgeId", Messege.getMessege(messageSource, checkUserId));
-				mv.addObject("errorMgePw", Messege.getMessege(messageSource, checkPassWord));
+				
+				//UserIdのエラー
+				if(!checkUserId.isFormsCheck()){
+					mv.addObject("errorMgeId", Messege.getMessege(messageSource, checkUserId));
+				}
+				//passwordのエラー
+				if(!checkPassWord.isFormsCheck()){
+					mv.addObject("errorMgePw", Messege.getMessege(messageSource, checkPassWord));
+				}
+				
 				mv.setViewName("login");
 			}
 			
@@ -88,7 +107,7 @@ public class LoginController {
 		@GetMapping("/logout")
 		public String logout() {
 			
-			user.userSet(null);
+			user = new Users();
 			
 			return "redirect:/";
 		}

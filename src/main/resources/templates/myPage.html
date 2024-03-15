@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout}">>
 <head>
     <meta charset="UTF-8" />
     <title>マイページ</title>
@@ -24,10 +26,12 @@
         
 
         <form action="/myPage/edit" method="post">
-		
 			<div class="intoForm" th:object = "${userData}">
-	            ユーザーID
-	            <input type="text" name="userId" th:value="*{userid}">
+				
+				<input type="hidden" name="id" th:value="*{id}">
+					
+				ユーザーID
+	            <input type="text" name="userid" th:value="*{userid}">
 	            
 	            パスワード
 	            <input type="password" name="password" th:value="*{password}">

@@ -40,8 +40,11 @@ public class MyPageController {
 	
 	@PostMapping("/edit")
 	public ModelAndView updataMyData(@ModelAttribute Users user, ModelAndView mv) {
+		
 		service.update(user);
-		mv.setViewName("form_SelfIntroduction");
+		this.user = service.loginCheack(user).get(0);
+		
+		mv.setViewName("redirect:/main/1");
 		
 		return mv;
 	}

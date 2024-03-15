@@ -32,13 +32,18 @@ public class UsersService {
 		return repository.findLoginUser(users.getUserid(), users.getPassword());
 	} 
 	
-//	public Users getUserData(Users user) {
-//		return repository.findById(user.getId());
-//	}
-	
 	//データベースのユーザーデータを更新
 	public void update(Users users) {
-		repository.save(users);
+		repository.updataUser(users.getId()
+								,users.getUserid()
+								,users.getPassword()
+								,users.getName()
+								,Integer.valueOf(users.getSex())
+								,users.getMail()
+								,Integer.valueOf(users.getAge())
+								,users.getText()
+								,users.getUniqueWord()
+								,users.getUpdated());
 	}
 }
 

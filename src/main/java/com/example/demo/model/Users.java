@@ -22,6 +22,18 @@ import lombok.Data;
 @SessionScope
 @Table(name = "users")
 @NamedQuery(name = "findLoginUser", query = "select u from Users u where u.userid = :userid and u.password = :password and deleteFlg = false order by u.id asc")
+@NamedQuery(name = "updateUser", 
+			query = "update Users u set"
+					+ " u.userid = :userid,"
+					+ " u.password = :password,"
+					+ " u.name = :name,"
+					+ " u.sex = :sex,"
+					+ " u.mail = :mail,"
+					+ " u.age = :age,"
+					+ " u.text = :text,"
+					+ " u.uniqueWord = :uniqueWord,"
+					+ " u.updated = :updated"
+					+ " where u.id = :id and deleteFlg = false")
 public class Users implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -161,7 +173,7 @@ public class Users implements Serializable{
 
 	//usersはinit（）で先に生成されるのでコンストラクタでは無く、別枠で更新する
 	public void userSet(Users user) {
-		this.id = user.getId();
+		this.id = user.id;
 		this.userid = user.getUserid();
 		this.password = user.getPassword();
 		this.name = user.getName();

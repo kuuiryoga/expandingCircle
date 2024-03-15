@@ -102,6 +102,7 @@ public class FormPattern {
 		if(InStringData != null) {
 			boolean patternCheck = isFormLimit(InStringData, min, max);
 			if(!patternCheck) {
+				System.out.println("test-limit");
 				errorKeys.add("form.outOfRangeCount");
 				Object[] params = {min, max};
 				paramsList.add(params);
