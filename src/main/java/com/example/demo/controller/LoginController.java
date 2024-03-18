@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.annotation.NonAuth;
 import com.example.demo.model.Users;
 import com.example.demo.service.FormPattern;
 import com.example.demo.service.Messege;
 import com.example.demo.service.UsersService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 //login用のコントローラ
@@ -36,12 +38,9 @@ public class LoginController {
 
 		@Autowired
 		MessageSource messageSource;
+
 		
-		
-		
-		
-		
-		
+		@NonAuth
 		@GetMapping("/")
 		public ModelAndView init(ModelAndView mv) {
 			mv.addObject("loginForm", new Users());
@@ -50,7 +49,7 @@ public class LoginController {
 		}
 
 		@PostMapping("/login")
-		public ModelAndView login(@ModelAttribute Users users, ModelAndView mv) {
+		public ModelAndView login(@ModelAttribute Users users, HttpServletRequest request, ModelAndView mv) {
 
 			//patternで英数字２０文字以内か確認する
 			FormPattern checkUserId = new FormPattern(users.getUserid());
@@ -73,7 +72,7 @@ public class LoginController {
 				// ログインできるユーザーが存在するか
 				if ( userList != null && userList.size() > 0 ) {
 					// ログイン成功時
-					
+					request.getSession().setAttribute("userId", user.getUserid());
 					user.userSet(userList.get(0));
 					mv.setViewName("selfIntroduction");
 				} else {
@@ -105,9 +104,10 @@ public class LoginController {
 		
 		//logout
 		@GetMapping("/logout")
-		public String logout() {
+		public String logout(HttpServletRequest request) {
 			
 			user = new Users();
+			request.getSession().removeAttribute("userId");
 			
 			return "redirect:/";
 		}
