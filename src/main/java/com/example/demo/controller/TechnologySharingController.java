@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.demo.model.Users;
 
 @RestController
-@RequestMapping("/selfIntroduction")
+@RequestMapping("/technologySharing")
 public class TechnologySharingController {
 
 	@Autowired
@@ -17,7 +17,7 @@ public class TechnologySharingController {
 
 	@GetMapping("")
 	public ModelAndView introduction(ModelAndView mv) {
-		mv.setViewName("selfIntroduction");
+		mv.setViewName("technologySharing");
 		return mv;
 	}
 }

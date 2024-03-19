@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.demo.model.Users;
 
 @RestController
-@RequestMapping("/technologySharing")
+@RequestMapping("/selfIntroduction")
 public class SelfIntroductionController {
 
 	@Autowired
