@@ -74,8 +74,7 @@ public class LoginController {
 					// ログイン成功時
 					request.getSession().setAttribute("userId", user.getUserid());
 					user.userSet(userList.get(0));
-					mv.setViewName("selfIntroduction");
-				    ModelAndView  model = new ModelAndView("redirect:/selfIntroduction");    
+				    ModelAndView  model = new ModelAndView("redirect:/selfIntroduction");   
 				    return model;  
 				} else {
 					// ログイン失敗時
