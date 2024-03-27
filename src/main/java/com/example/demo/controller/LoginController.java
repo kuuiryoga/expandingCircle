@@ -15,8 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.annotation.NonAuth;
 import com.example.demo.model.Users;
+import com.example.demo.repository.SharesRepository;
 import com.example.demo.service.FormPattern;
 import com.example.demo.service.Messege;
+import com.example.demo.service.SharesService;
 import com.example.demo.service.UsersService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,12 +39,16 @@ public class LoginController {
 		UsersService service;
 
 		@Autowired
+		SharesService sharesServce;
+		
+		@Autowired
 		MessageSource messageSource;
 
 		
 		@NonAuth
 		@GetMapping("/")
 		public ModelAndView init(ModelAndView mv) {
+			System.out.println(sharesServce.findAll().get(0).getTitle());
 			mv.addObject("loginForm", new Users());
 			mv.setViewName("login");
 			return mv;
@@ -62,7 +68,6 @@ public class LoginController {
 			checkPassWord.notBlank()
 			.formLimit(3, 20)
 			.notFullWidthCharacter();
-			
 			
 			
 			//Patternチェック
