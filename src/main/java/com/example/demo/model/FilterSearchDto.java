@@ -1,7 +1,7 @@
 package com.example.demo.model;
 
 import java.io.Serializable;
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
@@ -14,7 +14,7 @@ public class FilterSearchDto implements Serializable {
 	
 	private String searchText;
 	
-	private Map<String,String> uniqueText;
+	private List<String> uniqueText;
 
 	private Integer sortId;
 
@@ -40,11 +40,11 @@ public class FilterSearchDto implements Serializable {
 		this.searchText = searchText;
 	}
 
-	public Map<String, String> getUniqueText() {
+	public List<String> getUniqueText() {
 		return uniqueText;
 	}
 
-	public void setUniqueText(Map<String, String> uniqueText) {
+	public void setUniqueText(List<String> uniqueText) {
 		this.uniqueText = uniqueText;
 	}
 }

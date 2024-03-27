@@ -22,7 +22,7 @@ public class MyPageController {
 	@Autowired
 	UsersService service;
 	
-	@GetMapping()
+	@GetMapping("")
 	public ModelAndView toMyPage(@ModelAttribute Users user, ModelAndView mv) {
 		
 		

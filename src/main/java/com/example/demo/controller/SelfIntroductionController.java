@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.model.FilterSearchDto;
 import com.example.demo.model.Users;
+import com.example.demo.service.UsersService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -23,6 +24,10 @@ public class SelfIntroductionController {
 
 	@Autowired
 	FilterSearchDto intoroductionFilterDto;
+
+	@Autowired
+	UsersService service;
+	
 
 	@GetMapping("")
 	public ModelAndView introduction(ModelAndView mv, HttpServletRequest request) {
@@ -37,7 +42,8 @@ public class SelfIntroductionController {
 		userList.add(new Users());
 		userList.add(new Users());
 		mv.addObject("userList", userList);
-		if  (user.getUserid() != null)  {
+		if(this.service.loginCheack(this.user).size() > 0 && 
+				this.service.loginCheack(this.user).get(0) != null) {
 			mv.setViewName("selfIntroduction");
 			request.getSession().setAttribute("userId", user.getUserid());
 		} else {
