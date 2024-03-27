@@ -24,7 +24,7 @@ public class TechnologySharingController {
 	UserDto userDto;
 
 	@Autowired
-	FilterSearchDto intoroductionFilterDto;
+	FilterSearchDto technologySharingFilterDto;
 
 	@GetMapping("")
 	public ModelAndView introduction(ModelAndView mv) {
@@ -38,9 +38,9 @@ public class TechnologySharingController {
 		userList.add(new Users());
 		userList.add(new Users());
 		mv.addObject("userList", userList);
-		intoroductionFilterDto = new FilterSearchDto();
-		intoroductionFilterDto.setSortId(1);
-		mv.addObject("intoroductionFilterDto", intoroductionFilterDto);
+		technologySharingFilterDto = new FilterSearchDto();
+		technologySharingFilterDto.setSortId(1);
+		mv.addObject("technologySharingFilterDto", technologySharingFilterDto);
 		mv.setViewName("technologySharing");
 		return mv;
 	}

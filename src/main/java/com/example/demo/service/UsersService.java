@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Users;
@@ -17,11 +18,35 @@ public class UsersService {
 	@Autowired
 	UsersRepository repository;
 
-	// データベースよりフォーラム(掲示板)の一覧を取得
-	public List<Users> findAll() {
-		return repository.findAll();
+	
+	public List<Users> findByIntercepterSearch(Users user){
+		return repository.findByIntercepterSearch(
+				user.getName()
+				);
 	}
-
+	
+	
+	// データベースよりフォーラム(掲示板)の一覧を年齢の昇順に並び替えて取得する
+	public List<Users> findAllAscOrderOfAge() {
+		return repository.findAll(Sort.by(Sort.Direction.ASC, "age"));
+	}
+	
+	// データベースよりフォーラム(掲示板)の一覧を年齢の降順に並び替えて取得する
+	public List<Users> findAllDescOrderOfAge() {
+		return repository.findAll(Sort.by(Sort.Direction.DESC, "age"));
+	}
+	
+	
+	// データベースよりフォーラム(掲示板)の一覧を名前の昇順に並び替えて取得する
+	public List<Users> findAllAscOrderOfName() {
+		return repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
+	}
+	
+	// データベースよりフォーラム(掲示板)の一覧を名前の降順に並び替えて取得する
+	public List<Users> findAllDescOrderOfName() {
+		return repository.findAll(Sort.by(Sort.Direction.DESC, "name"));
+	}
+	
 	// データベースに値を登録
 	public void insert(Users users) {
 		repository.save(users);

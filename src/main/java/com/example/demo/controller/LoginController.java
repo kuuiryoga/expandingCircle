@@ -43,7 +43,7 @@ public class LoginController {
 		UsersService service;
 
 		@Autowired
-		SharesService sharesServce;
+		SharesService sharesService;
 		
 		@Autowired
 		MessageSource messageSource;
@@ -52,7 +52,6 @@ public class LoginController {
 		@NonAuth
 		@GetMapping("/")
 		public ModelAndView init(ModelAndView mv) {
-			System.out.println(sharesServce.findAll().get(0).getTitle());
 			mv.addObject("loginForm", new Users());
 			mv.setViewName("login");
 			return mv;
