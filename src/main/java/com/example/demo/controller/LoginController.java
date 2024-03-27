@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.annotation.NonAuth;
+import com.example.demo.model.UserDto;
 import com.example.demo.model.Users;
 import com.example.demo.repository.SharesRepository;
 import com.example.demo.service.FormPattern;
@@ -25,7 +26,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 //login用のコントローラ
-@RequestMapping("")
+@RequestMapping(value= "/")
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
@@ -34,6 +35,9 @@ public class LoginController {
 	
 		@Autowired
 		Users user;
+		
+		@Autowired
+		UserDto userDto;
 		
 		@Autowired
 		UsersService service;
@@ -79,6 +83,8 @@ public class LoginController {
 					// ログイン成功時
 					request.getSession().setAttribute("userId", user.getUserid());
 					user.userSet(userList.get(0));
+					userDto = new UserDto();
+					userDto.userSet(user);
 				    ModelAndView  model = new ModelAndView("redirect:/selfIntroduction");   
 				    return model;  
 				} else {

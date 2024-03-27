@@ -2,79 +2,40 @@ package com.example.demo.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.Table;
-import lombok.Data;
-
-//sessionScopeの移動に際して、データの整合性を取るためにシリアライズする
-@Data
-@Entity
 @Component
 @SessionScope
-@Table(name = "users")
-@NamedQuery(name = "findLoginUser", query = "select u from Users u where u.userid = :userid and u.password = :password and deleteFlg = false order by u.id asc")
-@NamedQuery(name = "updateUser", 
-			query = "update Users u set"
-					+ " u.userid = :userid,"
-					+ " u.password = :password,"
-					+ " u.name = :name,"
-					+ " u.sex = :sex,"
-					+ " u.mail = :mail,"
-					+ " u.age = :age,"
-					+ " u.text = :text,"
-					+ " u.uniqueWord = :uniqueWord,"
-					+ " u.updated = :updated"
-					+ " where u.id = :id and deleteFlg = false")
-public class Users implements Serializable{
+public class UserDto implements Serializable{
 	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+
 	private Integer id;
 
-	@Column(name = "userid")
 	private String userid;
 
-	@Column(name = "password")
 	private String password;
 
-	@Column(name = "name")
 	private String name;
 
-	@Column(name = "sex")
 	private Integer sex;
 
-	@Column(name = "mail")
 	private String mail;
 
-	@Column(name = "age")
 	private Integer age;
 
-	@Column(name = "text")
 	private String text;
 
-	@Column(name = "uniqueWord")
 	private String  uniqueWord;
 
-	@Column(name = "deleteFlg")
 	private boolean  deleteFlg;
 
-	@Column(name = "created")
 	private LocalDateTime  created;
 
-	@Column(name = "updated")
 	private LocalDateTime  updated;
+	
+	private String[] uniqueWords;
 
 	public Integer getId() {
 		return id;
@@ -174,7 +135,7 @@ public class Users implements Serializable{
 
 	//usersはinit（）で先に生成されるのでコンストラクタでは無く、別枠で更新する
 	public void userSet(Users user) {
-		this.id = user.id;
+		this.id = user.getId();
 		this.userid = user.getUserid();
 		this.password = user.getPassword();
 		this.name = user.getName();
@@ -184,6 +145,19 @@ public class Users implements Serializable{
 		this.text = user.getText();
 		this.uniqueWord = user.getUniqueWord();
 		this.updated = user.getUpdated();
+		try {
+			this.uniqueWords = user.getUniqueWord().split(",");
+		} catch (Exception e) {
+			this.uniqueWords = new String[]{""};
+		}
+	}
+
+	public String[] getUniqueWords() {
+		return uniqueWords;
+	}
+
+	public void setUniqueWords(String[] uniqueWords) {
+		this.uniqueWords = uniqueWords;
 	}
 
 }

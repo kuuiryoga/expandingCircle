@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.model.UserDto;
 import com.example.demo.model.Users;
 import com.example.demo.service.UsersService;
 
@@ -18,6 +19,9 @@ public class MyPageController {
 	
 	@Autowired
 	Users user;
+
+	@Autowired
+	UserDto userDto;
 	
 	@Autowired
 	UsersService service;
