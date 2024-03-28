@@ -49,6 +49,7 @@ public class SelfIntroductionController {
 		
 
 		userDto.userSet(user);
+		intoroductionFilterDto.setUniqueText(new String[]{"Java", "Python", "PHP", "C#", "JavaScript", "C"});
 		mv.addObject("intoroductionFilterDto", this.intoroductionFilterDto);
 		mv.addObject("userData", userDto);
 		mv.addObject("userList", sortFilter(this.intoroductionFilterDto));
@@ -160,12 +161,9 @@ public class SelfIntroductionController {
 			words = new ArrayList<>();
 		}
 		if ( FilterDto.getSearchText() == null || FilterDto.getSearchText().equals("") ) {
-			System.out.println("ssss");
-			return sortFilter(FilterDto);
+			FilterDto.setSearchText("");
 		}
-		System.out.println("sads");
 		userList = service.findCategoryIntroduction(words, FilterDto.getSearchText());
-		System.out.println("axcs");
 		switch(getNumber.orElse(1)){
 			case 1:
 				userList.sort(Comparator.comparing(Users::getAge,Comparator.reverseOrder()));
