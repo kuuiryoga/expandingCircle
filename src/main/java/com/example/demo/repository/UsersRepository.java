@@ -31,7 +31,7 @@ public interface UsersRepository extends JpaRepository<Users, Integer> {
 
 	public static final String _interoductionCategoryQuery
 	= "select * from users u1 "
-			+ " where u1.id = ("
+			+ " where u1.id in ("
 			+ " select id from (select id, name, unnest(regexp_split_to_array(unique_word, ',')) as data"
 			+ " from users) as c"
 			+ " where c.data in (:uniqueWord)"
