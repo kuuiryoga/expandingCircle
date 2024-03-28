@@ -71,13 +71,15 @@
 
 		<!-- 形だけ用意しました。 -->
 		<div style="margin:0 10px;">
-		    <div th:each="user :${userList}"  style="float: left; margin:5px;">
+		    <div th:each="profile :${userList}"  style="float: left; margin:5px;">
 				<a href="#" data-bs-toggle="modal" data-bs-target="#introductionModal" >
 					<div class="card" style="width: 18rem;">
 						  <svg class="bd-placeholder-img card-img-top" width="100%" height="230" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect fill="#868e96" width="100%" height="100%"/><text fill="#dee2e6" dy=".3em" x="50%" y="50%">Image cap</text></svg>
 						  <div class="card-body">
-						    <h1 class="card-title" style="text-align: center;">Card title</h1>
-						    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+						    <h1 th:text="${profile.name}" class="card-title" style="text-align: center;"></h1>
+						    <div class="card-text" th:each="w :${profile.uniqueWords}"  style="width: 100%; margin: 5px;">
+								<div  th:text="${w}" style="text-align: center; border: 1px solid gray; min-width: 70px; margin: 0 10px 10px 0; float:left;" />
+					        </div>
 					  	</div>
 					</div>
 			  	</a>
@@ -155,16 +157,45 @@
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
-		    <div class="input-group mb-3">
-			  <input type="text" class="form-control" placeholder="検索キーワード" aria-label="Recipient's username" aria-describedby="button-addon2">
-			  <button class="btn btn-outline-secondary" type="button" id="button-addon2">
-				  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-				  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-				</svg>
-			  </button>
-			</div>
+			<div class="intoForm" th:object = "${userData}">
+
+				
+				<div class="row">
+					<div class="col">
+				  		<svg class="bd-placeholder-img card-img-top" width="100%" height="230" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect fill="#868e96" width="100%" height="100%"/><text fill="#dee2e6" dy=".3em" x="50%" y="50%">Image cap</text></svg>
+					</div>
+					<div class="col">
+				        <div  style=" border-bottom: 1px gray solid; width: 140px;">名前</div>
+				        <div th:text="*{name}"  style=" border-bottom: 1px gray solid; margin-bottom: 10px;" />
+		
+				        <div  style=" border-bottom: 1px gray solid; width: 140px;">メールアドレス</div>
+				        <div th:text="*{mail}" style=" border-bottom: 1px gray solid; margin-bottom: 10px;"/>
+
+						<div class="row">
+							<div class="col">
+								<div  style=" border-bottom: 1px gray solid; width: 140px; ">性別</div>
+								<div th:if="*{sex} == 1" style=" border-bottom: 1px gray solid; margin-bottom: 10px;">男</div>
+								<div th:if="*{sex} == 2" style=" border-bottom: 1px gray solid; margin-bottom: 10px;">女</div>
+							</div>
+							<div class="col">
+						        <div style=" border-bottom: 1px gray solid; width: 140px;">年齢</div>
+			        			<div th:text="*{age}" style=" border-bottom: 1px gray solid; margin-bottom: 10px;" />
+				       		</div>
+				        </div>
+					</div>
+				</div>
+	            <div style=" border-bottom: 1px gray solid; margin-bottom: 0; width: 140px;">自己紹介</div>
+            	<div style=" margin-bottom: 10px;"  th:text="*{text}" />
+	
+				<div style="margin: 10px 0; border-bottom: 1px gray solid; width: 140px;">
+					得意な言語
+				</div>
+			    <div th:each="word :*{uniqueWords}"  style="width: 100%; margin-bottom: 10px;">
+					<div  th:text="${word}" style="text-align: center; border: 1px solid gray; min-width: 70px; margin: 0 10px 10px 0; float:left;" />
+		        </div>
 	      </div>
 	    </div>
+	  </div>
 	  </div>
 	</div>
 

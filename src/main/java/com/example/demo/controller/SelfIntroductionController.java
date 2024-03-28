@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,14 +43,16 @@ public class SelfIntroductionController {
 	//遷移時処理
 	@GetMapping("")
 	public ModelAndView introduction(ModelAndView mv, HttpServletRequest request) {
-		List<Users> userList = new ArrayList<>();
+		List<UserDto> userList = new ArrayList<>();
 		
-		userList = sortFilter(this.intoroductionFilterDto, userList);
-		
-		System.out.println(user.getName());
-		
-		System.out.println(service.findByIntercepterSearch(this.user));
-		
+		for (Users profile : sortFilter(this.intoroductionFilterDto)) {
+			UserDto u =  new UserDto();
+			u.userSet(profile);
+			userList.add(u);
+		}
+
+		userDto.userSet(user);
+		mv.addObject("userData", userDto);
 		mv.addObject("userList", userList);
 		mv.addObject("intoroductionFilterDto", this.intoroductionFilterDto);
 		
@@ -71,7 +74,7 @@ public class SelfIntroductionController {
 	public ModelAndView ajexSearch(ModelAndView mv, HttpServletRequest request,
 									@ModelAttribute FilterSearchDto SearchDto) {
 		List<Users> userList = new ArrayList<>();
-		userList = sortFilter(SearchDto, userList); 
+		userList = sortFilter(SearchDto); 
 		mv.addObject("userList", userList);
 		mv.addObject("intoroductionFilterDto", SearchDto);
 		if(this.service.loginCheack(this.user).size() > 0 && 
@@ -90,7 +93,8 @@ public class SelfIntroductionController {
 	
 	
 	//DTOのソート番号を用いてソートしたデータをDBから取得する
-	private List<Users> sortFilter(FilterSearchDto FilterDto, List<Users> userList){
+	private List<Users> sortFilter(FilterSearchDto FilterDto){
+		List<Users> userList = new ArrayList<>();
 		
 		Optional<Integer> getNumber = Optional.ofNullable(FilterDto.getSortId());
 		switch(getNumber.orElse(1)){

@@ -2,6 +2,9 @@ package com.example.demo.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
@@ -35,7 +38,7 @@ public class UserDto implements Serializable{
 
 	private LocalDateTime  updated;
 	
-	private String[] uniqueWords;
+	private List<String> uniqueWords;
 
 	public Integer getId() {
 		return id;
@@ -146,17 +149,20 @@ public class UserDto implements Serializable{
 		this.uniqueWord = user.getUniqueWord();
 		this.updated = user.getUpdated();
 		try {
-			this.uniqueWords = user.getUniqueWord().split(",");
+			this.uniqueWords = new ArrayList<>(Arrays.asList(user.getUniqueWord().split(",")));
+			System.out.println(uniqueWords);
+			System.out.println(uniqueWords.get(1));
+			System.out.println(user.getUniqueWord().split(",")[0]);
 		} catch (Exception e) {
-			this.uniqueWords = new String[]{""};
+			this.uniqueWords = new ArrayList<>();
 		}
 	}
 
-	public String[] getUniqueWords() {
+	public List<String> getUniqueWords() {
 		return uniqueWords;
 	}
 
-	public void setUniqueWords(String[] uniqueWords) {
+	public void setUniqueWords(List<String> uniqueWords) {
 		this.uniqueWords = uniqueWords;
 	}
 
