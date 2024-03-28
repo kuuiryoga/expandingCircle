@@ -49,24 +49,27 @@
 		     	<p style="width: 100%; height: 5px; margin:0; background-color: greenyellow;"/>
             </div>
     </div>
-	
+
 
     <div class="main" style="width: 100%;">
-		<!-- フィルターとソートは形だけ用意しました。 -->
-		<div style="margin: 10px 0 0 0; height: 90px;">
-			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal"  style="width: 100px;height: 60px;  position: absolute; left: 28px;">
-				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" style="width: 100%;">
-				  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-				</svg>
-				検索
-			</button>
-	        <select name="sort" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="width: 200px; position: absolute; right: 28px;">
-		            <option value="1">年齢順 降順</option>
-		            <option value="2">年齢順 昇順</option>
-		            <option value="3">名前順 降順</option>
-		            <option value="4">名前順 昇順</option>
-			</select>
-        </div>
+		<form  th:action="@{/selfIntroduction/search}"  th:object="${intoroductionFilterDto}" method="post">
+			<!-- フィルターとソートは形だけ用意しました。 -->
+			<div style="margin: 10px 0 0 0; height: 90px;">
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal"  style="width: 100px;height: 60px;  position: absolute; left: 28px;">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" style="width: 100%;">
+					  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+					</svg>
+					検索
+				</button>
+		        <select id="sort_select" name="sort" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="width: 200px; position: absolute; right: 28px;">
+			            <option value="1">年齢順 降順</option>
+			            <option value="2">年齢順 昇順</option>
+			            <option value="3">名前順 降順</option>
+			            <option value="4">名前順 昇順</option>
+				</select>
+	        </div>
+	        <input type="submit" id="submit_search" style="display: none;" />
+        </form>
 	
 
 		<!-- 形だけ用意しました。 -->
@@ -96,54 +99,27 @@
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
-		    <div class="input-group mb-3">
-			  <input type="text" class="form-control" placeholder="検索キーワード" aria-label="Recipient's username" aria-describedby="button-addon2">
-			  <button class="btn btn-outline-secondary" type="button" id="button-addon2">
-				  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-				  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-				</svg>
-			  </button>
-			</div>
-			<div style="margin: 10px 0; border-bottom: 1px gray solid;">
-				<h4>得意な言語</h4>
-			</div>
-			<div class="form-check" style="margin: 0 10px 10px 0; float:left">
-			  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked1">
-			  <label class="form-check-label" for="flexCheckChecked1">
-			    Java
-			  </label>
-			</div>
-			<div class="form-check" style="margin: 0 10px 10px 0; float:left">
-			  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked2">
-			  <label class="form-check-label" for="flexCheckChecked2">
-			    Python
-			  </label>
-			</div>
-			<div class="form-check" style="margin: 0 10px 10px 0; float:left">
-			  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked3">
-			  <label class="form-check-label" for="flexCheckChecked3">
-			    PHP
-			  </label>
-			</div>
-			<div class="form-check" style="margin: 0 10px 10px 0; float:left">
-			  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked4">
-			  <label class="form-check-label" for="flexCheckChecked4">
-			    C#
-			  </label>
-			</div>
-			<div class="form-check" style="margin: 0 10px 10px 0; float:left">
-			  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked5">
-			  <label class="form-check-label" for="flexCheckChecked5">
-			    JavaScript
-			  </label>
-			</div>
-			<div class="form-check" style="margin: 0 10px 10px 0; float:left">
-			  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked6">
-			  <label class="form-check-label" for="flexCheckChecked6">
-			    C
-			  </label>
-			</div>
-
+			  <form  th:action="@{/selfIntroduction/search}"  th:object="${intoroductionFilterDto}" method="post" >
+			    <div class="input-group mb-3">
+				  <input th:field = "*{searchText}"  type="text" class="form-control" placeholder="検索キーワード" aria-label="Recipient's username" aria-describedby="button-addon2">
+				  <button class="btn btn-outline-secondary" type="submit" id="button-addon2">
+					  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+					  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+					</svg>
+				  </button>
+				</div>
+				<div style="margin: 10px 0; border-bottom: 1px gray solid;">
+					<h4>得意な言語</h4>
+				</div>
+				<div style="width: 100%; margin:10px 0; height: 30px;">
+					<div class="checkbox-inline" th:each="sort : ${sortOptions}" style="float: left; margin: 0 10px 10px 0">
+					    <label> <input type="checkbox" name="fchecks" th:value="${sort}" th:text="${sort}" th:field="${intoroductionFilterDto.uniqueText}" style="margin:0 5px"></input>
+					    </label>
+					</div>
+				</div>
+	
+				<button type="submit" class="btn btn-primary" style="display:block; margin: auto; width: 100px;height: 60px;font-size: 20px;">検索</button>
+			</form>
 	      </div>
 	    </div>
 	  </div>
@@ -212,6 +188,12 @@
 			</button>
 		</a>
     </div>
-
+	<script>
+	  $(function(){
+	    $("#sort_select").change(function(){
+	      $("#submit_search").submit();
+	    });
+	  });
+	</script>
 </body>
 </html>

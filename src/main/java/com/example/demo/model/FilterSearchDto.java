@@ -14,7 +14,7 @@ public class FilterSearchDto implements Serializable {
 	
 	private String searchText;
 	
-	private List<String> uniqueText;
+	private String[] uniqueText;
 
 	private Integer sortId;
 
@@ -40,11 +40,11 @@ public class FilterSearchDto implements Serializable {
 		this.searchText = searchText;
 	}
 
-	public List<String> getUniqueText() {
+	public String[] getUniqueText() {
 		return uniqueText;
 	}
 
-	public void setUniqueText(List<String> uniqueText) {
+	public void setUniqueText(String[] uniqueText) {
 		this.uniqueText = uniqueText;
 	}
 }

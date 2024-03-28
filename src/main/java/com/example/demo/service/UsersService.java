@@ -47,6 +47,11 @@ public class UsersService {
 		return repository.findAll(Sort.by(Sort.Direction.DESC, "name"));
 	}
 	
+	// カテゴリー検索（自己紹介）
+	public List<Users> findCategoryIntroduction(List<String> uniqueWord, String keyword) {
+		return repository.findByIntroductionCategory(uniqueWord, keyword);
+	}
+	
 	// データベースに値を登録
 	public void insert(Users users) {
 		repository.save(users);

@@ -28,6 +28,15 @@ public interface UsersRepository extends JpaRepository<Users, Integer> {
 	
 	public static final String _intercepterQuery
 	= _usersMainQuery + " WHERE u.name LIKE %:name%";
+
+	public static final String _interoductionCategoryQuery
+	= "select * from users u1 "
+			+ " where u1.id = ("
+			+ " select id from (select id, name, unnest(regexp_split_to_array(unique_word, ',')) as data"
+			+ " from users) as c"
+			+ " where c.data in (:uniqueWord)"
+			+ " AND c.name LIKE %:name% "
+			+ " group by c.id)";
 	
 	public static final String _technologyQuery
 	= _sharesMainQuery + " WHERE s.name LIKE %:name% "
@@ -47,6 +56,12 @@ public interface UsersRepository extends JpaRepository<Users, Integer> {
 			,@Param("text")String text
 		);
 	
+	// 自己紹介カテゴリー検索
+	@Query( value = _interoductionCategoryQuery, nativeQuery = true )
+	public List<Users> findByIntroductionCategory(
+			@Param("uniqueWord")List<String> uniqueWord
+			,@Param("name")String name
+		);
 	
 	
 	// ログインユーザー取得

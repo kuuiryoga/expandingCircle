@@ -150,9 +150,6 @@ public class UserDto implements Serializable{
 		this.updated = user.getUpdated();
 		try {
 			this.uniqueWords = new ArrayList<>(Arrays.asList(user.getUniqueWord().split(",")));
-			System.out.println(uniqueWords);
-			System.out.println(uniqueWords.get(1));
-			System.out.println(user.getUniqueWord().split(",")[0]);
 		} catch (Exception e) {
 			this.uniqueWords = new ArrayList<>();
 		}
