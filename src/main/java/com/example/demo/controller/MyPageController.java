@@ -48,7 +48,7 @@ public class MyPageController {
 		service.update(user);
 		this.user = service.loginCheack(user).get(0);
 		
-		mv.setViewName("redirect:/main/1");
+		mv.setViewName("redirect:/selfIntroduction");
 		
 		return mv;
 	}

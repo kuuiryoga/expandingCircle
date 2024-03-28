@@ -58,11 +58,8 @@
 			</h2>
 		</div>
 
-        <form action="/myPage/edit" method="post" style="margin-top: 10px;">
+        <form action="/myPage/edit" method="post" name="edit" style="margin-top: 10px;">
 			<div class="intoForm" th:object = "${userData}">
-
-
-		        
 				
 				<input type="hidden" name="id" th:value="*{id}">
 				<div class="row">
@@ -142,7 +139,6 @@
 	            
 		        <label for="exampleInputPassword" class="form-label">パスワード（確認のため、二回入力してください。）</label>
 		        <input type="text" class="form-control form-control-lg" id="exampleInputPassword" th:field="*{password}"  style="margin:0 0 3% 0;" />
-		        <input type="text" class="form-control form-control-lg" id="exampleInputRePassword" th:field="*{password}"   style="margin:0 0 3% 0;" />
 	
 				<button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" id="create-sharing" style="display:block; margin: auto; width: 200px;height: 50px;font-size: 30px;margin-bottom: 20px;">
 					<div style="font-size: 20px;">
@@ -166,7 +162,10 @@
 	      </div>
 	      <div class="modal-footer">
 			<div style="width: 100%;">変更を保存しますか？</div>
-	        <button style="width: 60%; margin: 10px 20%;" type="button" class="btn btn-primary" data-bs-dismiss="modal">はい</button>
+				<button style="width: 60%; margin: 10px 20%;" type="button" class="btn btn-primary" data-bs-dismiss="modal">
+					<a href="" onclick="document.edit.submit();return false;">はい</a>
+				</button>
+			</form>
 	        <button style="width: 60%; margin: 10px 20%;" type="button" class="btn btn-secondary" data-bs-dismiss="modal">いいえ</button>
 	      </div>
 	    </div>

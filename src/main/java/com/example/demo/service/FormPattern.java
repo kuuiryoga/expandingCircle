@@ -97,6 +97,32 @@ public class FormPattern {
 	}
 	
 	
+//  数字判定処理（数字が入力されているか判定）
+	public FormPattern notDigit() {
+		
+		boolean patternCheck = false;
+		
+		for(char c : InStringData.toCharArray()) {
+			patternCheck = Character.isDigit(c);
+		}
+		
+		if(patternCheck) {
+			errorKeys.add("form.notEnter");
+			Object[] params = {"数字"};
+			paramsList.add(params);
+		}
+		
+		return this;
+	}
+	
+	
+//	文字判定処理（文字が入力されているか判定）
+	public FormPattern notCharacter() {
+		patternChecker(1,"数字");
+		return this;
+	}
+	
+	
 //	入力判定処理（文字数制限に引っかかったか判定）
 	public FormPattern formLimit(int min, int max) {
 		if(InStringData != null) {
@@ -136,5 +162,33 @@ public class FormPattern {
 		int formLength = form.length();
 		return min < formLength && formLength < max;
 	}
-	
+
+//	文字列関係の判定処理
+	private void patternChecker(int filterPattern, String keyValue) {
+		
+		boolean patternCheck = false;
+		
+		//変数filterPatternによって処理を変更する
+		switch(filterPattern) {
+		
+			case 1:
+				for(char c : InStringData.toCharArray()) {
+					patternCheck = Character.isDigit(c);
+				}
+			break;
+			
+			case 2:
+				for(char c : InStringData.toCharArray()) {
+					patternCheck  = isFullWidth(c);
+				}
+			break;
+		}
+		
+		if(patternCheck) {
+			errorKeys.add("form.notEnter");
+			Object[] params = {keyValue};
+			paramsList.add(params);
+		}
+		
+	}
 }
